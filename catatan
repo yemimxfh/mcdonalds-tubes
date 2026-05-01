@@ -1,0 +1,157 @@
+1. 👤 User
+
+
+
+For admin + cashier (role-based)
+
+User
+
+id (PK)
+
+name
+
+email (unique)
+
+password
+
+role ENUM('admin', 'cashier')
+
+created_at
+
+updated_at
+
+💡 Covers:
+
+Login
+
+Role separation (+10 points)
+
+Admin management CRUD
+
+
+---
+
+2. 📂 Category
+
+
+
+Category
+
+id (PK)
+
+name
+
+created_at
+
+updated_at
+
+
+---
+
+3. 🍔 Product
+
+
+
+Product
+
+id (PK)
+
+name
+
+price
+
+category_id (FK → Category.id)
+
+image_url (optional)
+
+is_available (boolean)
+
+created_at
+
+updated_at
+
+💡 One category → many products
+
+
+---
+
+4. 🧾 Order
+
+
+
+Order
+
+id (PK)
+
+order_code (unique)
+
+status ENUM('pending', 'paid', 'completed', 'canceled')
+
+total_price
+
+created_at
+
+updated_at
+
+💡
+
+No customer_id (anonymous system)
+
+order_code = tracking identity
+
+
+---
+
+5. 🧩 OrderItem
+
+
+
+OrderItem
+
+id (PK)
+
+order_id (FK → Order.id)
+
+product_id (FK → Product.id)
+
+quantity
+
+price_at_order_time
+
+💡 Critical for:
+
+Many products per order
+
+Price history consistency
+
+
+---
+
+6. 🔐 PasswordReset (for forgot/reset password)
+
+
+
+PasswordReset
+
+id (PK)
+
+user_id (FK → User.id)
+
+token (unique)
+
+expired_at
+
+created_at
+
+
+---
+
+🔗 RELATIONSHIP SUMMARY
+
+User (admin/cashier)
+
+Category 1 ────< Product
+
+Order 1 ────< OrderItem >──── 1 Product
+
+User 1 ────< PasswordReset

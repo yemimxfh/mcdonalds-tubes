@@ -2,14 +2,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('User', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,          
         defaultValue: Sequelize.UUIDV4 
       },
-      username: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
@@ -24,9 +24,9 @@ module.exports = {
         allowNull: false
       },
       role: {
-        type: Sequelize.ENUM('customer', 'cashier', 'admin'),
+        type: Sequelize.ENUM( 'cashier', 'admin'),
         allowNull: false,
-        defaultValue: 'customer'
+        defaultValue: 'cashier'
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('User');
   }
 };

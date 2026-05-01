@@ -1,8 +1,9 @@
 import "reflect-metadata";
-import { Table, Column, Model, DataType, PrimaryKey } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, PrimaryKey, HasMany } from 'sequelize-typescript';
+import { PasswordReset } from "./password-reset";
 
 @Table({
-    tableName: 'Users',
+    tableName: 'User',
     timestamps: true,
 })
 export class User extends Model {
@@ -18,7 +19,7 @@ export class User extends Model {
         type: DataType.STRING,
         allowNull: false,
     })
-    username!: string;
+    name!: string;
 
     @Column({
         type: DataType.STRING,
@@ -33,9 +34,12 @@ export class User extends Model {
     password!: string;
 
     @Column({
-        type: DataType.ENUM('admin', 'customer', 'cashier'),
-        defaultValue: 'customer',
+        type: DataType.ENUM('admin', 'cashier'),
+        defaultValue: 'cashier',
         allowNull: false,
     })
-    role!: 'admin' | 'customer' | 'cashier';
+    role!: 'admin' | 'cashier';
+
+    @HasMany(() => PasswordReset)
+    passwordResets!: PasswordReset[];
 }
